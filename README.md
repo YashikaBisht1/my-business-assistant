@@ -46,3 +46,4 @@ Next steps (optional)
 - Add file-type handling for PDFs and other document formats.
 - Connect the UI to your Retrieval-Augmented Generation (RAG) pipeline to
   fetch policy documents automatically.
+"# my-business-assistant" 
