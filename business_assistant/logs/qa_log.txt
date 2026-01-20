@@ -1,0 +1,256 @@
+2026-01-19 21:42:18,225 - business_assistant.core.config - INFO - Configuration loaded for environment: development
+2026-01-19 21:44:20,595 - business_assistant.core.config - INFO - Configuration loaded for environment: development
+2026-01-19 21:44:20,977 - __main__ - INFO - Initializing database...
+2026-01-19 21:44:20,977 - __main__ - INFO - Database type: sqlite
+2026-01-19 21:44:20,977 - __main__ - INFO - Database path: C:\Users\bisht\business_assistant\business_assistant\business_assistant.db
+2026-01-19 21:44:20,988 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-01-19 21:44:20,989 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("decisions")
+2026-01-19 21:44:20,989 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-01-19 21:44:20,997 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("decisions")
+2026-01-19 21:44:20,997 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-01-19 21:44:20,998 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("policies")
+2026-01-19 21:44:20,998 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-01-19 21:44:20,999 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("policies")
+2026-01-19 21:44:20,999 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-01-19 21:44:21,000 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("feedback")
+2026-01-19 21:44:21,000 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-01-19 21:44:21,001 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("feedback")
+2026-01-19 21:44:21,001 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-01-19 21:44:21,001 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("audit_logs")
+2026-01-19 21:44:21,002 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-01-19 21:44:21,002 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("audit_logs")
+2026-01-19 21:44:21,003 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-01-19 21:44:21,003 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("cache_entries")
+2026-01-19 21:44:21,004 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-01-19 21:44:21,004 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("cache_entries")
+2026-01-19 21:44:21,005 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-01-19 21:44:21,005 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("users")
+2026-01-19 21:44:21,005 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-01-19 21:44:21,006 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("users")
+2026-01-19 21:44:21,006 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-01-19 21:44:21,008 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE decisions (
+	id INTEGER NOT NULL, 
+	timestamp DATETIME, 
+	question TEXT, 
+	computed_insights TEXT, 
+	summary_of_findings TEXT NOT NULL, 
+	policy_alignment TEXT NOT NULL, 
+	recommended_actions TEXT NOT NULL, 
+	limitations_confidence TEXT NOT NULL, 
+	user_id VARCHAR(100), 
+	session_id VARCHAR(100), 
+	extra_metadata JSON, 
+	PRIMARY KEY (id)
+)
+
+
+2026-01-19 21:44:21,009 - sqlalchemy.engine.Engine - INFO - [no key 0.00044s] ()
+2026-01-19 21:44:21,020 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_decisions_timestamp ON decisions (timestamp)
+2026-01-19 21:44:21,021 - sqlalchemy.engine.Engine - INFO - [no key 0.00051s] ()
+2026-01-19 21:44:21,030 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_decisions_id ON decisions (id)
+2026-01-19 21:44:21,031 - sqlalchemy.engine.Engine - INFO - [no key 0.00061s] ()
+2026-01-19 21:44:21,040 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_decisions_session_id ON decisions (session_id)
+2026-01-19 21:44:21,041 - sqlalchemy.engine.Engine - INFO - [no key 0.00049s] ()
+2026-01-19 21:44:21,050 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_decisions_user_id ON decisions (user_id)
+2026-01-19 21:44:21,051 - sqlalchemy.engine.Engine - INFO - [no key 0.00060s] ()
+2026-01-19 21:44:21,061 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE policies (
+	id INTEGER NOT NULL, 
+	name VARCHAR(255) NOT NULL, 
+	content TEXT NOT NULL, 
+	version VARCHAR(50) NOT NULL, 
+	category VARCHAR(100), 
+	is_active BOOLEAN, 
+	created_at DATETIME, 
+	updated_at DATETIME, 
+	extra_metadata JSON, 
+	PRIMARY KEY (id)
+)
+
+
+2026-01-19 21:44:21,062 - sqlalchemy.engine.Engine - INFO - [no key 0.00073s] ()
+2026-01-19 21:44:21,071 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_policies_name ON policies (name)
+2026-01-19 21:44:21,071 - sqlalchemy.engine.Engine - INFO - [no key 0.00051s] ()
+2026-01-19 21:44:21,084 - sqlalchemy.engine.Engine - INFO - CREATE INDEX idx_policy_name_version ON policies (name, version)
+2026-01-19 21:44:21,085 - sqlalchemy.engine.Engine - INFO - [no key 0.00057s] ()
+2026-01-19 21:44:21,095 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_policies_category ON policies (category)
+2026-01-19 21:44:21,096 - sqlalchemy.engine.Engine - INFO - [no key 0.00058s] ()
+2026-01-19 21:44:21,106 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_policies_is_active ON policies (is_active)
+2026-01-19 21:44:21,107 - sqlalchemy.engine.Engine - INFO - [no key 0.00054s] ()
+2026-01-19 21:44:21,116 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_policies_id ON policies (id)
+2026-01-19 21:44:21,116 - sqlalchemy.engine.Engine - INFO - [no key 0.00068s] ()
+2026-01-19 21:44:21,127 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE cache_entries (
+	id INTEGER NOT NULL, 
+	cache_key VARCHAR(255) NOT NULL, 
+	cache_value TEXT NOT NULL, 
+	expires_at DATETIME NOT NULL, 
+	created_at DATETIME, 
+	hit_count INTEGER, 
+	PRIMARY KEY (id)
+)
+
+
+2026-01-19 21:44:21,128 - sqlalchemy.engine.Engine - INFO - [no key 0.00065s] ()
+2026-01-19 21:44:21,136 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_cache_entries_expires_at ON cache_entries (expires_at)
+2026-01-19 21:44:21,137 - sqlalchemy.engine.Engine - INFO - [no key 0.00048s] ()
+2026-01-19 21:44:21,146 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_cache_entries_id ON cache_entries (id)
+2026-01-19 21:44:21,147 - sqlalchemy.engine.Engine - INFO - [no key 0.00063s] ()
+2026-01-19 21:44:21,156 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_cache_entries_cache_key ON cache_entries (cache_key)
+2026-01-19 21:44:21,157 - sqlalchemy.engine.Engine - INFO - [no key 0.00062s] ()
+2026-01-19 21:44:21,167 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE users (
+	id INTEGER NOT NULL, 
+	username VARCHAR(100) NOT NULL, 
+	email VARCHAR(255), 
+	password_hash VARCHAR(255), 
+	is_active BOOLEAN, 
+	is_admin BOOLEAN, 
+	created_at DATETIME, 
+	last_login DATETIME, 
+	extra_metadata JSON, 
+	PRIMARY KEY (id)
+)
+
+
+2026-01-19 21:44:21,167 - sqlalchemy.engine.Engine - INFO - [no key 0.00057s] ()
+2026-01-19 21:44:21,176 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_users_is_active ON users (is_active)
+2026-01-19 21:44:21,176 - sqlalchemy.engine.Engine - INFO - [no key 0.00060s] ()
+2026-01-19 21:44:21,186 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_users_email ON users (email)
+2026-01-19 21:44:21,186 - sqlalchemy.engine.Engine - INFO - [no key 0.00052s] ()
+2026-01-19 21:44:21,195 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_users_username ON users (username)
+2026-01-19 21:44:21,195 - sqlalchemy.engine.Engine - INFO - [no key 0.00059s] ()
+2026-01-19 21:44:21,205 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_users_id ON users (id)
+2026-01-19 21:44:21,206 - sqlalchemy.engine.Engine - INFO - [no key 0.00058s] ()
+2026-01-19 21:44:21,215 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE feedback (
+	id INTEGER NOT NULL, 
+	decision_id INTEGER NOT NULL, 
+	user_id VARCHAR(100), 
+	rating INTEGER, 
+	comment TEXT, 
+	is_helpful BOOLEAN, 
+	timestamp DATETIME, 
+	extra_metadata JSON, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(decision_id) REFERENCES decisions (id)
+)
+
+
+2026-01-19 21:44:21,215 - sqlalchemy.engine.Engine - INFO - [no key 0.00050s] ()
+2026-01-19 21:44:21,227 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_feedback_timestamp ON feedback (timestamp)
+2026-01-19 21:44:21,227 - sqlalchemy.engine.Engine - INFO - [no key 0.00066s] ()
+2026-01-19 21:44:21,238 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_feedback_id ON feedback (id)
+2026-01-19 21:44:21,239 - sqlalchemy.engine.Engine - INFO - [no key 0.00063s] ()
+2026-01-19 21:44:21,248 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_feedback_decision_id ON feedback (decision_id)
+2026-01-19 21:44:21,249 - sqlalchemy.engine.Engine - INFO - [no key 0.00062s] ()
+2026-01-19 21:44:21,261 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE audit_logs (
+	id INTEGER NOT NULL, 
+	decision_id INTEGER, 
+	action VARCHAR(100) NOT NULL, 
+	user_id VARCHAR(100), 
+	ip_address VARCHAR(45), 
+	details JSON, 
+	timestamp DATETIME, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(decision_id) REFERENCES decisions (id)
+)
+
+
+2026-01-19 21:44:21,261 - sqlalchemy.engine.Engine - INFO - [no key 0.00059s] ()
+2026-01-19 21:44:21,272 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_audit_logs_action ON audit_logs (action)
+2026-01-19 21:44:21,273 - sqlalchemy.engine.Engine - INFO - [no key 0.00060s] ()
+2026-01-19 21:44:21,282 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_audit_logs_timestamp ON audit_logs (timestamp)
+2026-01-19 21:44:21,283 - sqlalchemy.engine.Engine - INFO - [no key 0.00056s] ()
+2026-01-19 21:44:21,292 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_audit_logs_decision_id ON audit_logs (decision_id)
+2026-01-19 21:44:21,292 - sqlalchemy.engine.Engine - INFO - [no key 0.00060s] ()
+2026-01-19 21:44:21,301 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_audit_logs_id ON audit_logs (id)
+2026-01-19 21:44:21,302 - sqlalchemy.engine.Engine - INFO - [no key 0.00059s] ()
+2026-01-19 21:44:21,311 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_audit_logs_user_id ON audit_logs (user_id)
+2026-01-19 21:44:21,312 - sqlalchemy.engine.Engine - INFO - [no key 0.00054s] ()
+2026-01-19 21:44:21,323 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-01-19 21:44:21,324 - __main__ - INFO - ✓ Database initialized successfully!
+2026-01-19 21:44:21,325 - __main__ - INFO -   Tables created in: C:\Users\bisht\business_assistant\business_assistant\business_assistant.db
+2026-01-19 21:45:22,925 - business_assistant.core.config - INFO - Configuration loaded for environment: development
+2026-01-19 21:46:01,819 - business_assistant.ui.gradio_app - INFO - Starting Gradio app on 127.0.0.1:7860
+2026-01-19 21:46:03,823 - httpx - INFO - HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2026-01-19 21:46:03,914 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2026-01-19 21:46:04,492 - httpx - INFO - HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
+2026-01-19 21:47:56,326 - business_assistant.core.config - INFO - Configuration loaded for environment: development
+2026-01-19 21:48:27,674 - business_assistant.ui.gradio_app - INFO - Processing file: test_data.csv
+2026-01-19 21:48:27,675 - business_assistant.ui.gradio_app - ERROR - Error processing file: pandas/matplotlib not available in this environment
+Traceback (most recent call last):
+  File "C:\Users\bisht\business_assistant\business_assistant\ui\gradio_app.py", line 171, in process_files
+    res = process_tabular(str(file_path))
+  File "C:\Users\bisht\business_assistant\business_assistant\analysis\analysis_engine.py", line 111, in process_tabular
+    raise RuntimeError("pandas/matplotlib not available in this environment")
+RuntimeError: pandas/matplotlib not available in this environment
+2026-01-19 21:48:36,732 - business_assistant.core.config - INFO - Configuration loaded for environment: development
+2026-01-19 21:48:59,341 - business_assistant.core.config - INFO - Configuration loaded for environment: development
+2026-01-19 21:49:21,138 - business_assistant.ui.gradio_app - INFO - Starting Gradio app on 127.0.0.1:7860
+2026-01-19 21:49:24,353 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2026-01-19 21:49:36,233 - business_assistant.core.config - INFO - Configuration loaded for environment: development
+2026-01-19 21:50:11,348 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2026-01-19 21:50:21,354 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2026-01-19 21:52:03,843 - business_assistant.ui.gradio_app - INFO - Processing file: test_data.csv
+2026-01-19 21:52:03,846 - business_assistant.ui.gradio_app - ERROR - Error processing file: pandas/matplotlib not available in this environment
+Traceback (most recent call last):
+  File "C:\Users\bisht\business_assistant\business_assistant\ui\gradio_app.py", line 171, in process_files
+    res = process_tabular(str(file_path))
+  File "C:\Users\bisht\business_assistant\business_assistant\analysis\analysis_engine.py", line 111, in process_tabular
+    raise RuntimeError("pandas/matplotlib not available in this environment")
+RuntimeError: pandas/matplotlib not available in this environment
+2026-01-19 21:53:39,314 - business_assistant.core.config - INFO - Configuration loaded for environment: development
+2026-01-19 21:55:28,858 - business_assistant.core.config - INFO - Configuration loaded for environment: development
+2026-01-19 21:58:03,978 - business_assistant.core.config - INFO - Configuration loaded for environment: development
+2026-01-19 21:58:20,650 - business_assistant.ui.gradio_app - INFO - Starting Gradio app on 127.0.0.1:7860
+2026-01-19 21:58:23,308 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2026-01-19 21:58:23,483 - httpx - INFO - HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2026-01-19 21:58:23,937 - httpx - INFO - HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
+2026-01-19 22:00:51,078 - business_assistant.ui.gradio_app - INFO - Processing file: test_data.csv
+2026-01-19 22:00:52,469 - business_assistant.ui.gradio_app - INFO - Processed file successfully: 2 visuals generated
+2026-01-19 22:01:54,671 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2026-01-19 22:02:02,070 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2026-01-19 22:02:10,550 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 400 Bad Request"
+2026-01-19 22:02:10,553 - business_assistant.service.decision_service - INFO - Starting answer_question
+2026-01-19 22:02:13,230 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2026-01-19 22:02:21,670 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 400 Bad Request"
+2026-01-19 22:02:21,738 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-01-19 22:02:21,742 - sqlalchemy.engine.Engine - INFO - INSERT INTO decisions (timestamp, question, computed_insights, summary_of_findings, policy_alignment, recommended_actions, limitations_confidence, user_id, session_id, extra_metadata) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2026-01-19 22:02:21,742 - sqlalchemy.engine.Engine - INFO - [generated in 0.00076s] ('2026-01-19 16:32:21.741762', 'Generate business analysis report', None, 'Trends: "sales changed 10.0% from first to last date in dataset"\n\nAverages: {"sales": {"count": 4, "mean": 1062.5, "std": 110.86778913041725, "min" ... (138 characters truncated) ... mparisons: {"region_means": {"North": {"sales": 1016.6666666666666, "leave_days": 5.666666666666667}, "South": {"sales": 1200.0, "leave_days": 3.0}}}', 'Policy 1: contains 1 overlapping token(s) with insights: anomalies', 'From trends: \'sales changed 10.0% from first to last date in dataset\' — Suggested actions (only if supported by further validation): investigate ro ... (1173 characters truncated) ... s are detected, ensure recommended operational changes are reviewed against the full policy text and approved by policy owners before implementation.', 'Confidence: moderate — required insight fields present and at least one policy provided.', None, None, '{"computed_insights_present": true, "policies_count": 1, "past_feedback_count": 0, "computed_insights_length": 608}')
+2026-01-19 22:02:21,752 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-01-19 22:02:21,760 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-01-19 22:02:21,767 - sqlalchemy.engine.Engine - INFO - SELECT decisions.id, decisions.timestamp, decisions.question, decisions.computed_insights, decisions.summary_of_findings, decisions.policy_alignment, decisions.recommended_actions, decisions.limitations_confidence, decisions.user_id, decisions.session_id, decisions.extra_metadata 
+FROM decisions 
+WHERE decisions.id = ?
+2026-01-19 22:02:21,768 - sqlalchemy.engine.Engine - INFO - [generated in 0.00186s] (1,)
+2026-01-19 22:02:21,771 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-01-19 22:02:21,772 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-01-19 22:02:21,774 - sqlalchemy.engine.Engine - INFO - INSERT INTO audit_logs (decision_id, action, user_id, ip_address, details, timestamp) VALUES (?, ?, ?, ?, ?, ?)
+2026-01-19 22:02:21,775 - sqlalchemy.engine.Engine - INFO - [generated in 0.00060s] (1, 'decision_created', None, None, '{"timestamp": "2026-01-19T16:32:10.553889Z", "question": "Generate business analysis report", "decision_id": 1, "inputs": {"computed_insights_present ... (49 characters truncated) ... t": 0, "computed_insights_length": 608}, "output_keys": ["summary_of_findings", "policy_alignment", "recommended_actions", "limitations_confidence"]}', '2026-01-19 16:32:21.774727')
+2026-01-19 22:02:21,779 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-01-19 22:02:21,788 - business_assistant.service.decision_service - INFO - Completed answer_question in 11.23s
+2026-01-19 22:02:21,788 - business_assistant.ui.gradio_app - INFO - Decision saved with ID: 1
+2026-01-19 22:02:37,484 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2026-01-19 22:02:49,723 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 400 Bad Request"
+2026-01-19 22:02:49,727 - business_assistant.service.decision_service - INFO - Starting answer_question
+2026-01-19 22:02:52,526 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2026-01-19 22:03:00,617 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 400 Bad Request"
+2026-01-19 22:03:00,626 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-01-19 22:03:00,630 - sqlalchemy.engine.Engine - INFO - INSERT INTO decisions (timestamp, question, computed_insights, summary_of_findings, policy_alignment, recommended_actions, limitations_confidence, user_id, session_id, extra_metadata) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2026-01-19 22:03:00,631 - sqlalchemy.engine.Engine - INFO - [cached since 38.89s ago] ('2026-01-19 16:33:00.630412', '"Which employees exceeded leave limits?"', None, 'Trends: "sales changed 10.0% from first to last date in dataset"\n\nAverages: {"sales": {"count": 4, "mean": 1062.5, "std": 110.86778913041725, "min" ... (138 characters truncated) ... mparisons: {"region_means": {"North": {"sales": 1016.6666666666666, "leave_days": 5.666666666666667}, "South": {"sales": 1200.0, "leave_days": 3.0}}}', 'Policy 1: contains 1 overlapping token(s) with insights: anomalies', 'From trends: \'sales changed 10.0% from first to last date in dataset\' — Suggested actions (only if supported by further validation): investigate ro ... (1173 characters truncated) ... s are detected, ensure recommended operational changes are reviewed against the full policy text and approved by policy owners before implementation.', 'Confidence: moderate — required insight fields present and at least one policy provided.', None, None, '{"computed_insights_present": true, "policies_count": 1, "past_feedback_count": 0, "computed_insights_length": 608}')
+2026-01-19 22:03:00,666 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-01-19 22:03:00,677 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-01-19 22:03:00,679 - sqlalchemy.engine.Engine - INFO - SELECT decisions.id, decisions.timestamp, decisions.question, decisions.computed_insights, decisions.summary_of_findings, decisions.policy_alignment, decisions.recommended_actions, decisions.limitations_confidence, decisions.user_id, decisions.session_id, decisions.extra_metadata 
+FROM decisions 
+WHERE decisions.id = ?
+2026-01-19 22:03:00,679 - sqlalchemy.engine.Engine - INFO - [cached since 38.91s ago] (2,)
+2026-01-19 22:03:00,682 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-01-19 22:03:00,683 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-01-19 22:03:00,684 - sqlalchemy.engine.Engine - INFO - INSERT INTO audit_logs (decision_id, action, user_id, ip_address, details, timestamp) VALUES (?, ?, ?, ?, ?, ?)
+2026-01-19 22:03:00,685 - sqlalchemy.engine.Engine - INFO - [cached since 38.91s ago] (2, 'decision_created', None, None, '{"timestamp": "2026-01-19T16:32:49.728627Z", "question": "\\"Which employees exceeded leave limits?\\"", "decision_id": 2, "inputs": {"computed_insig ... (60 characters truncated) ... t": 0, "computed_insights_length": 608}, "output_keys": ["summary_of_findings", "policy_alignment", "recommended_actions", "limitations_confidence"]}', '2026-01-19 16:33:00.684504')
+2026-01-19 22:03:00,688 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-01-19 22:03:00,697 - business_assistant.service.decision_service - INFO - Completed answer_question in 10.97s
+2026-01-19 22:03:00,697 - business_assistant.ui.gradio_app - INFO - Decision saved with ID: 2

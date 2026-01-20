@@ -1,0 +1,15 @@
+{
+  "trends": "Monthly sick leave increased 12% in Q4 compared with Q3; Sales in region North dropped by 8% month-over-month.",
+  "averages": {
+    "leave_days_avg": 9.67,
+    "sales_avg_qoq": -1.4
+  },
+  "anomalies": [
+    "Employee Bob: 15 leave days this quarter (outlier)",
+    "Region North: two consecutive months with >5% revenue decline"
+  ],
+  "comparisons": {
+    "region_comparison": "North has higher leave and lower sales vs South",
+    "period_comparison": "Q4 decline vs Q3"
+  }
+}

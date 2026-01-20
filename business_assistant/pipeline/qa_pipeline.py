@@ -2,6 +2,7 @@ from typing import List
 
 from business_assistant.rag.vector_store import PolicyVectorStore as ChromaStore
 from business_assistant.llm.groq_llm import GroqLLM
+from business_assistant.core.config import settings
 
 
 class QAPipeline:
@@ -43,6 +44,10 @@ class QAPipeline:
         Returns:
             List[str]: Matching document texts
         """
-        documents = self.vector_store.similarity_search(query)
+        # Check if vector store is empty
+        if self.vector_store.is_empty():
+            return []
+        
+        documents = self.vector_store.similarity_search(query, k=settings.TOP_K_MATCHES)
 
         return [doc.page_content for doc in documents]

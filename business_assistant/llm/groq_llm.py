@@ -30,17 +30,33 @@ class GroqLLM:
         # Initialize LLM client if available
         if ChatGroq is None:
             self.llm = None
+            self._init_error = "langchain_groq package not installed"
         else:
             # Use settings fields from core.config
             api_key = getattr(settings, "GROQ_API_KEY", None)
             model = getattr(settings, "LLM_MODEL", None)
             temperature = getattr(settings, "TEMPERATURE", None)
-            # Instantiate ChatGroq: try positional args first (widest compatibility), then fall back
-            try:
-                # Use positional args for broad compatibility with different client versions
-                self.llm = ChatGroq(api_key, model, temperature)  # type: ignore[arg-type]
-            except Exception:
+            
+            if not api_key:
                 self.llm = None
+                self._init_error = "GROQ_API_KEY not set in environment variables"
+            else:
+                # Instantiate ChatGroq: try different initialization methods
+                try:
+                    # Try keyword args first (newer langchain-groq versions)
+                    try:
+                        self.llm = ChatGroq(
+                            groq_api_key=api_key,
+                            model_name=model or "gemma2-9b-it",
+                            temperature=temperature or 0.3
+                        )  # type: ignore[arg-type]
+                    except TypeError:
+                        # Fallback to positional args (older versions)
+                        self.llm = ChatGroq(api_key, model or "gemma2-9b-it", temperature or 0.3)  # type: ignore[arg-type]
+                    self._init_error = None
+                except Exception as e:
+                    self.llm = None
+                    self._init_error = f"Failed to initialize Groq client: {str(e)}"
 
         # Keep a simple prompt template string; if PromptTemplate is
         # available we can use it for formatting, otherwise fallback to
